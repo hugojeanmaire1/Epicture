@@ -14,7 +14,7 @@ const config = {
   issuer: 'https://api.imgur.com/3/',
   clientId: 'b9aac4c2e7aee5f',
   clientSecret: '88e8af25253fadd26604147a1f4be86d4e9a90fd',
-  redirectUrl: 'com.testapp',
+  redirectUrl: 'com.epicture://callback',
   serviceConfiguration: {
     authorizationEndpoint: 'https://api.imgur.com/oauth2/authorize',
     tokenEndpoint: 'https://api.imgur.com/oauth2/token',
@@ -26,7 +26,10 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loadingLog: false,
+      isConnected: false,
+      accessToken: '',
+      refreshToken: '',
+      accessTokenExpirationDate: '',
     };
   }
 
