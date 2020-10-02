@@ -20,11 +20,16 @@ export default class Login extends Component {
     _sendRequestLogin = async () => {
         try {
             const result = await authorize(config);
+            this.calc();
             console.log(result);
         } catch (error) {
             console.log('Error = ' + error);
         }
     };
+
+    calc(){
+        this.props.callback(true);
+    }
 
     render() {
         return (
