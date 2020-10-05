@@ -22,6 +22,7 @@ export default class Login extends Component {
             const result = await authorize(config);
             this.calc();
             console.log(result);
+            this.props.callback("Home");
         } catch (error) {
             console.log('Error = ' + error);
         }

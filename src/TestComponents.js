@@ -7,22 +7,26 @@ const AlbumsRoute = () => <Text>Albums</Text>;
 
 const RecentsRoute = () => <Text>Recents</Text>;
 
-const LinksRoute = () => <Text>Links</Text>;
+const LinksRoute = () => <Text>Notifications</Text>;
+
+const ProfileRoute = () => <Text>Profile</Text>;
 
 const MyComponent = () => {
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'music', title: 'Music', icon: 'account-settings' },
-        { key: 'albums', title: 'Albums', icon: 'album' },
-        { key: 'recents', title: 'Recents', icon: 'history' },
-        { key: 'fdp', title: 'FilsDePute', icon: 'link' },
+        { key: 'home', title: 'Home', icon: 'home', color: "#2a2a2a"},
+        { key: 'search', title: 'Search', icon: 'image-search', color: "#2a2a2a"},
+        { key: 'photos', title: 'Upload', icon: 'camera', color: "#2a2a2a"},
+        { key: 'notification', title: 'Notifications', icon: 'link', color: "#2a2a2a"},
+        { key: 'profil', title: 'Profil', icon: 'link', color: "#2a2a2a"},
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
-        music: MusicRoute,
-        albums: AlbumsRoute,
-        recents: RecentsRoute,
-        links: LinksRoute,
+        home: MusicRoute,
+        search: AlbumsRoute,
+        photos: RecentsRoute,
+        notification: LinksRoute,
+        profil: ProfileRoute,
     });
 
     return (
