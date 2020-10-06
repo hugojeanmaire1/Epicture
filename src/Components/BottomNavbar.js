@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import {BottomNavigation} from "react-native-paper";
-import Login from "../Login";
+import MostViral from '../View/MostViral';
+import Feed from '../View/Feed';
+import Search from '../View/Search';
+import Upload from '../View/Upload';
+import Profile from '../View/Profile';
 
 export default class BottomNavbar extends Component {
     constructor(props) {
@@ -9,26 +13,21 @@ export default class BottomNavbar extends Component {
         this.state = {
             index: 0,
             routes: [
-                {key: 'most_viral', title: 'Most Viral', icon:'home', color: '#000000'},
-                {key: 'login', title: 'Login', icon:'account-circle', color: '#2a2a2a', loginFunc: this.loginHandler},
+                {key: 'mostViral', title: 'Most Viral', icon:'home', color: '#2a2a2a'},
+                {key: 'search', title: 'Search', icon: 'image-search', color: "#2a2a2a"},
+                {key: 'upload', title: 'Upload', icon: 'camera', color: "#2a2a2a"},
+                {key: 'profile', title: 'Profile', icon: 'account-circle', color: "#2a2a2a"},
             ],
-            isLogged: false
         };
-        this.loginHandler = this.loginHandler.bind(this);
-    }
-
-
-    loginHandler = (result) => {
-        this.setState({
-            isLogged: true,
-            index: 0,
-        })
     }
 
     handleIndexChanges = index => this.setState({index});
 
     renderScene = BottomNavigation.SceneMap({
-        login: Login,
+        mostViral: MostViral,
+        upload: Upload,
+        search: Search,
+        profile: Profile
     })
 
     render() {
@@ -40,7 +39,6 @@ export default class BottomNavbar extends Component {
                     onIndexChange={this.handleIndexChanges}
                     renderScene={this.renderScene}
                 />
-
             </View>
         );
     }

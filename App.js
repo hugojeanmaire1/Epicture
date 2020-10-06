@@ -10,7 +10,9 @@ import React, {Component} from 'react';
 import {StyleSheet, View, StatusBar} from 'react-native';
 import Login from './src/Login';
 import Home from './src/Home';
-import {Provider as PaperProvider, Text} from "react-native-paper";
+import {Provider as PaperProvider} from "react-native-paper";
+import Store from './src/Store/ConfigureStore'
+import { Provider as StoreProvider } from "react-redux";
 
 export default class App extends Component {
 
@@ -39,12 +41,14 @@ export default class App extends Component {
 
     render() {
         return (
-            <PaperProvider>
-                <View style={styles.container}>
-                    <StatusBar backgroundColor="#2a2a2a"/>
-                    { this.selectedView() }
-                </View>
-            </PaperProvider>
+            <StoreProvider store={Store}>
+                <PaperProvider>
+                    <View style={styles.container}>
+                        <StatusBar backgroundColor="#2a2a2a"/>
+                        { this.selectedTab() }
+                    </View>
+                </PaperProvider>
+            </StoreProvider>
         );
     }
 }

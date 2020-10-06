@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, StatusBar} from 'react-native';
 import {Provider as PaperProvider} from "react-native-paper";
-import TestComponents from "./TestComponents";
+import BottomNavbar from "./Components/BottomNavbar";
 
 export default class Home extends Component {
     render() {
@@ -9,7 +9,7 @@ export default class Home extends Component {
             <PaperProvider>
                 <View style={styles.container}>
                     <StatusBar hidden/>
-                    <TestComponents/>
+                    <BottomNavbar/>
                 </View>
             </PaperProvider>
         );

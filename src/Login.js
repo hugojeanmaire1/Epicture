@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import env from '../env.json'
 import {authorize} from 'react-native-app-auth';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet} from 'react-native';
+import { connect } from "react-redux";
 
 const config = {
     issuer: env.issuer,
@@ -15,7 +16,7 @@ const config = {
     },
 };
 
-export default class Login extends Component {
+class Login extends Component {
 
     _sendRequestLogin = async () => {
         try {
@@ -28,11 +29,12 @@ export default class Login extends Component {
         }
     };
 
-    calc(){
+    calc() {
         this.props.callback(true);
     }
 
     render() {
+        console.log("Props: " + JSON.stringify(this.props));
         return (
             <Button
                 title="Authorize"
@@ -43,6 +45,11 @@ export default class Login extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return state;
+}
+
+export default connect(mapStateToProps)(Login);
 
 const styles = StyleSheet.create({
     loginButton: {
