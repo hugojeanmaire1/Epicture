@@ -22,6 +22,8 @@ class Login extends Component {
         try {
             const result = await authorize(config);
             this.calc();
+            const action = { type: "LOGIN_TYPE", data: result }
+            this.props.dispatch(action);
             console.log(result);
             this.props.callback("Home");
         } catch (error) {
@@ -46,10 +48,10 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return state;
+    return {apiInfo: state.apiInfo};
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect()(Login);
 
 const styles = StyleSheet.create({
     loginButton: {

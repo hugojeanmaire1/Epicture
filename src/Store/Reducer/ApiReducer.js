@@ -1,19 +1,12 @@
 const initialState = {
-    accessToken: '',
-    accessTokenExpirationDate: '',
-    authorizeAdditionalParameters: {},
-    idToken: '',
-    refreshToken: '',
-    scopes: [],
-    tokenAdditionalParameters: {},
-    tokenType: '',
+    apiInfo: {},
 }
 
 function LoginClient(state = initialState, action) {
     let nextState;
     switch (action.type) {
         case 'LOGIN_TYPE':
-
+            return {...state, apiInfo: action.data}
         default:
             return state
     }
