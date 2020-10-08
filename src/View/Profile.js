@@ -1,13 +1,13 @@
 import { Text } from 'react-native-paper';
 import * as React from 'react';
 import { connect } from "react-redux";
+import ProfileTabView from "../Components/ProfileTabView";
 
 class Profile extends React.Component {
-    
+
     render() {
-        console.log("Profile state: " + JSON.stringify(this.props.apiInfo));
         return (
-            <Text>Profile { JSON.stringify(this.props.apiInfo) }</Text>
+            <ProfileTabView></ProfileTabView>
         );
     }
 }
