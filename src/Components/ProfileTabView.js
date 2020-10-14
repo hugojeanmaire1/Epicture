@@ -2,6 +2,8 @@ import * as React from 'react';
 import { View, StyleSheet, Dimensions, Text} from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TabBar } from 'react-native-tab-view';
+import UserComments from './UserComments'
+
 
 const PostsRoute = () => (
     <View style={[styles.scene, { backgroundColor: 'black' }]} />
@@ -16,12 +18,15 @@ const FollowingRoute = () => (
 );
 
 const CommentsRoute = () => (
-    <View style={[styles.scene, { backgroundColor: 'black' }]} />
+    <View>
+        <UserComments style={[styles.scene, { backgroundColor: 'black' }]}/>
+    </View>
 );
 
 const initialLayout = { width: Dimensions.get('window').width };
 
 export default function TabViewExample() {
+
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: 'posts', title: 'Posts' },

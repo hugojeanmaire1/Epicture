@@ -37,7 +37,6 @@ class UserInfos extends React.Component {
                     style={{height: 80,
                         width: 80,
                         borderRadius: 400/ 2,
-                        zIndex: 1,
                         position: 'absolute',
                         top: 20
                     }}
