@@ -3,14 +3,19 @@ import { View, StyleSheet, Dimensions, Text} from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { TabBar } from 'react-native-tab-view';
 import UserComments from './UserComments'
+import UserFavorites from "./UserFavorites";
+import UserPosts from "./UserPosts";
 
 
 const PostsRoute = () => (
-    <View style={[styles.scene, { backgroundColor: 'black' }]} />
-);
+    <View style={[styles.scene, { backgroundColor: 'black' }]}>
+        <UserPosts/>
+    </View>);
 
 const FavoritesRoute = () => (
-    <View style={[styles.scene, { backgroundColor: 'black' }]} />
+    <View style={[styles.scene, { backgroundColor: 'black' }]}>
+          <UserFavorites/>
+    </View>
 );
 
 const FollowingRoute = () => (
@@ -18,8 +23,8 @@ const FollowingRoute = () => (
 );
 
 const CommentsRoute = () => (
-    <View>
-        <UserComments style={[styles.scene, { backgroundColor: 'black' }]}/>
+    <View style={[styles.scene, { backgroundColor: 'black' }]}>
+        <UserComments/>
     </View>
 );
 
