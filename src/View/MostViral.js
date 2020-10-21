@@ -2,7 +2,6 @@ import { ScrollView, View, StyleSheet, SafeAreaView } from 'react-native';
 import * as React from 'react';
 import ApiRequest from '../Api/ApiRequest';
 import ParseContent from '../Api/ParseContentImages';
-//import {Picker} from '@react-native-community/picker';
 
 export default class MostViral extends React.Component {
 
@@ -55,9 +54,22 @@ export default class MostViral extends React.Component {
 
     render() {
         return (
-            <SafeAreaView >
-                <View style={styles.picker}>
-{/*                    <View style={{ flex: 0.5 }}>
+            <View>
+                <SafeAreaView style={{backgroundColor: '#2a2a2a'}}>
+                    <View style={styles.picker}>
+
+                    </View>
+                    <ScrollView contentContainerStyle={styles.scrollView} removeClippedSubviews={true}>
+                        { this.renderImages() }
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
+        );
+    }
+}
+
+/*
+<View style={{ flex: 0.5 }}>
                         <Picker
                             selectedValue={this.state.viral}
                             style={{backgroundColor: '#C4DBF6'}}
@@ -79,15 +91,8 @@ export default class MostViral extends React.Component {
                             <Picker.Item label="Top" value="top" />
                             <Picker.Item label="Time" value="time" />
                         </Picker>
-                    </View>*/}
-                </View>
-                <ScrollView contentContainerStyle={styles.scrollView} removeClippedSubviews={true}>
-                    { this.renderImages() }
-                </ScrollView>
-            </SafeAreaView>
-        );
-    }
-}
+                    </View>
+ */
 
 const styles = StyleSheet.create({
 
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     scrollView: {
-        backgroundColor: '#181817',
+        backgroundColor: '#2a2a2a',
         justifyContent: 'center',
         padding: 20
     },

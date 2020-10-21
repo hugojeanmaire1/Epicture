@@ -8,8 +8,8 @@ export default class Home extends Component {
     render() {
         return (
             <PaperProvider>
+                <StatusBar barStyle="dark"/>
                 <View style={styles.container}>
-                    <StatusBar/>
                     <BottomNavbar/>
                 </View>
             </PaperProvider>

@@ -43,7 +43,7 @@ export default class App extends Component {
         return (
             <StoreProvider store={Store}>
                 <PaperProvider>
-                    <StatusBar backgroundColor="#2a2a2a"/>
+                    <StatusBar barStyle="dark"/>
                     <View style={styles.container}>
                         { this.selectedTab() }
                     </View>

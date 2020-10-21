@@ -24,8 +24,8 @@ export default class BottomNavbar extends Component {
 
     renderScene = BottomNavigation.SceneMap({
         mostViral: MostViral,
-        upload: Upload,
         search: Search,
+        upload: Upload,
         profile: Profile
     })
 

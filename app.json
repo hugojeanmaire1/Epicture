@@ -19,7 +19,13 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.epicture",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.epicture",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

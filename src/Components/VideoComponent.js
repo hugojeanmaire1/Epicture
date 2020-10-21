@@ -1,5 +1,5 @@
 import React from 'react';
-/*import Video from 'react-native-video';*/
+import { Video } from "expo-av";
 import { Dimensions, View, Text } from 'react-native';
 
 export default class ImageComponent extends React.Component {
@@ -28,19 +28,21 @@ export default class ImageComponent extends React.Component {
                 <View style={{ flex: 1, flexDirection: 'row', paddingTop: 7, paddingLeft: 10 }}>
                     <Text style={{ color: 'white', fontSize: 18 }}>{this.props.data.title}</Text>
                 </View>
-                {/*<View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Video
                         ref={(ref) => {
                             this.player = ref
                         }}
+                        rate={1.0}
+                        volume={1.0}
+                        isMuted={false}
+                        resizeMode="cover"
+                        shouldPlay
+                        isLooping
                         style={{ width: this.newWidth, height: this.newHeight }}
                         source={{uri: this.props.video.link}}
-                        onBuffer={this.onBuffer}
-                        onEnd={this.onEnd}
-                        onError={this.onError}
-                        repeat={true}
                     />
-                </View>*/}
+                </View>
             </View>
         )
     }

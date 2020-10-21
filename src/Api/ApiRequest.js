@@ -22,7 +22,25 @@ module.exports = {
                 'Authorization': 'Bearer ' + authorization
             }
         }).then((response) => {
+            console.log(response)
             return response.json()
+        }).catch((error) => {
+
+        })
+    },
+
+    favoriteAnImage(urlTarget: string, authorization: string) {
+        return fetch(env.issuer + urlTarget, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type':'application/json',
+                'Authorization': 'Bearer ' + authorization
+            }
+        }).then((response) => {
+            console.log(response)
+            return response.json()
+        }).catch((error) => {
+
         })
     }
 }
