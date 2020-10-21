@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, StyleSheet, Dimensions, Text, SafeAreaView, ScrollView} from 'react-native';
 import { connect } from "react-redux";
 import Favorites from "./Favorites";
+import ApiRequest from '../Api/ApiRequest';
 
 class UserFavorites extends React.Component {
     constructor(props) {
@@ -9,25 +10,37 @@ class UserFavorites extends React.Component {
         this.state = {
             favorites: [],
         }
+        this._isMounted = false
+        ApiRequest.getProfile("account/" + this.props.apiInfo.params.account_username + "/favorites/", this.props.apiInfo.params.access_token).then((response) => {
+            this.setState({
+                favorites: response.data,
+                loading: false
+            })
+        }, (err) => {
+            console.log('error: ', err)
+        })
     }
 
     componentDidMount() {
-        fetch("https://api.imgur.com/3/account/" + this.props.apiInfo.tokenAdditionalParameters.account_username + "/favorites/\n", {
-            headers: {
-                'Authorization': 'Bearer ' + this.props.apiInfo.accessToken
-            }
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({favorites: responseJson})
-            })
+        this._isMounted = true
     };
 
+    componentWillUnmount() {
+        this._isMounted = false
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this._isMounted) {
+        }
+    }
+
     createFavoritesComponents() {
-        if (this.state.favorites == undefined)
+        if (this.state.favorites === undefined)
             return (<Text style={{color: 'white'}}>No Fucking Favorites Yet</Text>)
         var favoritesArray = []
+        console.log("Link: " + JSON.stringify(this.state.favorites))
         for (var i in this.state.favorites.data) {
-            favoritesArray.push(<Favorites style={{margin: 20,}} key={i} img_link={this.state.favorites.data[i].link} img_ups={this.state.favorites.data[i].ups} img_downs={this.state.favorites.data[i].downs}></Favorites>)
+            favoritesArray.push(<Favorites style={{margin: 20,}} key={i} img_link={this.state.favorites.data[i].link} img_ups={this.state.favorites.data[i].ups} img_downs={this.state.favorites.data[i].downs}/>)
         }
         return (favoritesArray)
     }

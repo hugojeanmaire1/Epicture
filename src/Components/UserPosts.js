@@ -12,22 +12,25 @@ class UserPosts extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://api.imgur.com/3/account/me/images/\n", {
+        fetch("https://api.imgur.com/3/account/me/images/", {
             headers: {
-                'Authorization': 'Bearer ' + this.props.apiInfo.accessToken
+                'Authorization': 'Bearer ' + this.props.apiInfo.params.access_token
             }
-        }).then((response) => response.json())
-            .then((responseJson) => {
+        }).then((response) => {
+            console.log("Text: " + JSON.stringify(response))
+            response.json().then((responseJson) => {
+                console.log(responseJson);
                 this.setState({posts: responseJson})
             })
+        })
     };
 
     createPostsComponents() {
-        if (this.state.posts == undefined)
+        if (this.state.posts === undefined)
             return (<Text style={{color: 'white'}}>No Fucking Posts Yet</Text>)
         var postsArray = []
         for (var i in this.state.posts.data) {
-            postsArray.push(<Favorites style={{margin: 20,}} key={i} img_link={this.state.posts.data[i].link} img_ups={this.state.posts.data[i].ups} img_downs={this.state.posts.data[i].downs}></Favorites>)
+            postsArray.push(<Favorites style={{margin: 20,}} key={i} img_link={this.state.posts.data[i].link} img_ups={this.state.posts.data[i].ups} img_downs={this.state.posts.data[i].downs}/>)
         }
         return (postsArray)
     }

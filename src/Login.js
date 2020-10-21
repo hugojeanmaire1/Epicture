@@ -1,30 +1,29 @@
 import React, {Component} from 'react';
 import env from '../env.json'
-import {authorize} from 'react-native-app-auth';
-import {Button, StyleSheet} from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import {Button, Text} from 'react-native-paper';
 import { connect } from "react-redux";
-
-const config = {
-    issuer: env.issuer,
-    clientId: env.clientId,
-    clientSecret: env.clientSecret,
-    redirectUrl: env.redirectUrl,
-    serviceConfiguration: {
-        authorizationEndpoint: 'https://api.imgur.com/oauth2/authorize',
-        tokenEndpoint: 'https://api.imgur.com/oauth2/token',
-        revocationEndpoint: 'https://api.imgur.com/oauth2/revoke',
-    },
-};
+import * as AuthSession from "expo-auth-session";
 
 class Login extends Component {
 
+    async componentDidMount() {
+/*        await Font.loadAsync({
+            'sansitaSwashed-Medium': require('./assets/fonts/SansitaSwashed-Medium.ttf')
+        });*/
+    }
+
     _sendRequestLogin = async () => {
         try {
-            const result = await authorize(config);
+            const redirect_uri = AuthSession.makeRedirectUri();
+            console.log(redirect_uri)
+            const result = await AuthSession.startAsync({
+                authUrl: `https://api.imgur.com/oauth2/authorize?client_id=${env.clientId}&response_type=token`,
+                returnUrl: redirect_uri,
+            });
             this.calc();
             const action = { type: "LOGIN_TYPE", data: result }
             this.props.dispatch(action);
-            console.log(result);
             this.props.callback("Home");
         } catch (error) {
             console.log('Error = ' + error);
@@ -36,29 +35,64 @@ class Login extends Component {
     }
 
     render() {
-        console.log("Props: " + JSON.stringify(this.props));
         return (
-            <Button
-                title="Authorize"
-                onPress={() => this._sendRequestLogin()}
-                style={styles.loginButton}
-            />
+            <View style={{ flex: 1 }}>
+                <View style={ styles.container }>
+                    <View style={ styles.center }>
+                        <Text style={styles.heading}>Epicture</Text>
+                    </View>
+                    <View style={ styles.center }>
+
+                    </View>
+                    <View style={ styles.center }>
+                        <Button
+                            mode="contained"
+                            icon="account-circle"
+                            onPress={() => this._sendRequestLogin()}
+                            style={styles.loginButton}>
+                            <Text style={{ color: "#C4DBF6"}}>Login</Text>
+                        </Button>
+                    </View>
+                </View>
+            </View>
         );
     }
-}
-
-const mapStateToProps = (state) => {
-    return {apiInfo: state.apiInfo};
 }
 
 export default connect()(Login);
 
 const styles = StyleSheet.create({
+    center: {
+        flex: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        //backgroundColor: "#63a7f0"
+        backgroundColor: "#2a2a2a",
+    },
+
+    logo: {
+        flex: 1,
+        width: 900,
+        height: 900,
+        resizeMode: 'contain',
+    },
+
     loginButton: {
         width: '80%',
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: '10%',
-        backgroundColor: '#89C623',
+        backgroundColor: '#ed7462',
+        borderRadius: 15
     },
+
+    heading: {
+        color: '#C4DBF6',
+        //fontFamily: 'sansitaSwashed-Medium',
+        fontSize: 40,
+    }
 });

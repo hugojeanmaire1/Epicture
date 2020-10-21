@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import {BottomNavigation} from "react-native-paper";
 import MostViral from '../View/MostViral';
-import Feed from '../View/Feed';
 import Search from '../View/Search';
 import Upload from '../View/Upload';
 import Profile from '../View/Profile';

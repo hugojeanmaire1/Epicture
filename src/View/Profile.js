@@ -9,11 +9,9 @@ class Profile extends React.Component {
 
     render() {
         return (
-            <View
-                style={{flex: 1}}
-            >
+            <View style={{flex: 1}}>
                 <UserInfos/>
-                <ProfileTabView></ProfileTabView>
+                <ProfileTabView/>
             </View>
         );
     }

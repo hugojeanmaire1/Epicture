@@ -7,12 +7,12 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, View, StatusBar} from 'react-native';
+import {StyleSheet, View, StatusBar, SafeAreaView} from 'react-native';
 import Login from './src/Login';
 import Home from './src/Home';
 import {Provider as PaperProvider} from "react-native-paper";
 import Store from './src/Store/ConfigureStore'
-import { Provider as StoreProvider } from "react-redux";
+import { Provider as StoreProvider} from 'react-redux';
 
 export default class App extends Component {
 
@@ -43,8 +43,8 @@ export default class App extends Component {
         return (
             <StoreProvider store={Store}>
                 <PaperProvider>
+                    <StatusBar backgroundColor="#2a2a2a"/>
                     <View style={styles.container}>
-                        <StatusBar backgroundColor="#2a2a2a"/>
                         { this.selectedTab() }
                     </View>
                 </PaperProvider>
@@ -55,10 +55,10 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
 
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
 });

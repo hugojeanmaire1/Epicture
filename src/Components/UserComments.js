@@ -13,9 +13,9 @@ class UserComments extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://api.imgur.com/3/account/" +  this.props.apiInfo.tokenAdditionalParameters.account_username + "/comments/\n", {
+        fetch("https://api.imgur.com/3/account/" +  this.props.apiInfo.params.account_username + "/comments/", {
             headers: {
-                'Authorization': 'Bearer ' + this.props.apiInfo.accessToken
+                'Authorization': 'Bearer ' + this.props.apiInfo.params.access_token
             }
         }).then((response) => response.json())
         .then((responseJson) => {

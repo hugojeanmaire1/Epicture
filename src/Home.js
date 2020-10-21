@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, StatusBar} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Provider as PaperProvider} from "react-native-paper";
 import BottomNavbar from "./Components/BottomNavbar";
+import {StatusBar} from "expo-status-bar";
 
 export default class Home extends Component {
     render() {
         return (
             <PaperProvider>
                 <View style={styles.container}>
-                    <StatusBar hidden/>
+                    <StatusBar/>
                     <BottomNavbar/>
                 </View>
             </PaperProvider>
