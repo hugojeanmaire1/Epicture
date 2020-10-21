@@ -21,6 +21,7 @@ class Login extends Component {
                 authUrl: `https://api.imgur.com/oauth2/authorize?client_id=${env.clientId}&response_type=token`,
                 returnUrl: redirect_uri,
             });
+            console.log("Result: " + JSON.stringify(result))
             this.calc();
             const action = { type: "LOGIN_TYPE", data: result }
             this.props.dispatch(action);
