@@ -2,8 +2,9 @@ import { ScrollView, View, StyleSheet, SafeAreaView } from 'react-native';
 import * as React from 'react';
 import ApiRequest from '../Api/ApiRequest';
 import ParseContent from '../Api/ParseContentImages';
+import {connect} from "react-redux";
 
-export default class MostViral extends React.Component {
+class MostViral extends React.Component {
 
     constructor(props) {
         super(props);
@@ -49,7 +50,9 @@ export default class MostViral extends React.Component {
     }
 
     renderImages() {
-        return (<ParseContent apiRes={this.state.apiRes} />)
+        const access = JSON.parse(JSON.stringify(this.props.apiInfo))
+        console.log(JSON.stringify(access.params))
+        return (<ParseContent apiRes={this.state.apiRes} accessToken={access.params.access_token}/>)
     }
 
     render() {
@@ -67,6 +70,12 @@ export default class MostViral extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {apiInfo: state.apiInfo};
+}
+
+export default connect(mapStateToProps)(MostViral);
 
 /*
 <View style={{ flex: 0.5 }}>

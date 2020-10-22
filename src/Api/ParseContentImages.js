@@ -27,10 +27,16 @@ export default class ParseContent extends React.Component {
                             accessToken={this.props.accessToken}/>)
                     }
                 } else {
-
+                    return (<ImageComponent
+                        image={data}
+                        data={data}
+                        key={'data' + index}/>)
                 }
             } else {
-
+                return (<VideoComponent
+                    video={data}
+                    data={data}
+                    key={'data' + index}/>)
             }
         })
     }
@@ -39,13 +45,7 @@ export default class ParseContent extends React.Component {
 
 /*
 
-                    return (<ImageComponent
-                        image={data}
-                        data={data}
-                        key={'data' + index}/>)
 
-                                        return (<VideoComponent
-                    video={data.images[0]}
-                    data={data}
-                    key={'data' + index}/>)
+
+
  */

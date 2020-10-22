@@ -16,6 +16,7 @@ module.exports = {
 
     getProfile(urlTarget: string, authorization: string) {
         return fetch(env.issuer + urlTarget, {
+            method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type':'application/json',
@@ -31,6 +32,7 @@ module.exports = {
 
     favoriteAnImage(urlTarget: string, authorization: string) {
         return fetch(env.issuer + urlTarget, {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type':'application/json',
@@ -40,7 +42,7 @@ module.exports = {
             console.log(response)
             return response.json()
         }).catch((error) => {
-
+            console.log(error)
         })
     }
 }

@@ -14,25 +14,25 @@ class Login extends Component {
     }
 
     _sendRequestLogin = async () => {
-        try {
-            const redirect_uri = AuthSession.makeRedirectUri();
-            console.log(redirect_uri)
-            const result = await AuthSession.startAsync({
-                authUrl: `https://api.imgur.com/oauth2/authorize?client_id=${env.clientId}&response_type=token`,
-                returnUrl: redirect_uri,
-            });
-            console.log("Result: " + JSON.stringify(result))
-            this.calc();
+        const redirect_uri = AuthSession.makeRedirectUri();
+        console.log(redirect_uri)
+        const result = await AuthSession.startAsync({
+            authUrl: `https://api.imgur.com/oauth2/authorize?client_id=${env.clientId}&response_type=token`,
+            returnUrl: redirect_uri,
+        });
+        console.log("Result: " + JSON.stringify(result))
+        if (result.type === "success") {
             const action = { type: "LOGIN_TYPE", data: result }
             this.props.dispatch(action);
-            this.props.callback("Home");
-        } catch (error) {
-            console.log('Error = ' + error);
+            this.props.callback(true);
+            console.log("SUCCESS")
+        } else {
+            this.props.callback(false);
         }
     };
 
     calc() {
-        this.props.callback(true);
+
     }
 
     render() {
