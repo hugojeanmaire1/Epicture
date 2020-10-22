@@ -30,7 +30,7 @@ class UserPosts extends React.Component {
             return (<Text style={{color: 'white'}}>No Fucking Posts Yet</Text>)
         var postsArray = []
         for (var i in this.state.posts.data) {
-            postsArray.push(<Favorites style={{margin: 20,}} key={i} img_link={this.state.posts.data[i].link} img_ups={this.state.posts.data[i].ups} img_downs={this.state.posts.data[i].downs}/>)
+            postsArray.push(<Favorites style={{margin: 20,}} key={i} img_title={"sssssssssssssssssssssssssssssssssss"} img_link={this.state.posts.data[i].link} img_ups={this.state.posts.data[i].ups} img_downs={this.state.posts.data[i].downs}/>)
         }
         return (postsArray)
     }

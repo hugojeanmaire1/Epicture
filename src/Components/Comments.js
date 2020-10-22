@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Image, Text, View, StyleSheet } from 'react-native';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import { connect } from "react-redux";
 import env from '../../env.json'
 
@@ -18,14 +19,23 @@ class Comments extends React.Component {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(this.props.comment_img)
                 this.setState({image: responseJson.data.link})
             })
     };
 
     render () {
         return (
-            <View style={{flexDirection: 'row', margin: 20 , flexWrap: 'wrap', backgroundColor: '#313631', borderRadius: 10}}>
+            <Card style={{marginVertical: 20}}>
+                <Card.Title/>
+                <Card.Cover source={{uri:this.state.image}} />
+                <Card.Content>
+                    <Paragraph style={{fontWeight: 'bold', marginTop: 20, fontSize: 18}}>{this.props.comment}</Paragraph>
+                </Card.Content>
+                <Card.Actions style={{marginTop: 30}}>
+                    <Text>{this.props.comment_upvotes} UpVotes</Text>
+                </Card.Actions>
+            </Card>
+            /*<View style={{flexDirection: 'row', margin: 20 , flexWrap: 'wrap', backgroundColor: '#313631', borderRadius: 10}}>
                 <Image
                     source={{uri:this.state.image}}
                     style={{
@@ -54,7 +64,7 @@ class Comments extends React.Component {
                         left: 100
                     }}
                 >{this.props.comment_upvotes} UpVotes</Text>
-            </View>
+            </View>*/
         );
     }
 }

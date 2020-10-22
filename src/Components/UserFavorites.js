@@ -3,6 +3,7 @@ import { View, StyleSheet, Dimensions, Text, SafeAreaView, ScrollView} from 'rea
 import { connect } from "react-redux";
 import Favorites from "./Favorites";
 import ApiRequest from '../Api/ApiRequest';
+import ParseContent from "../Api/ParseContentImages";
 
 class UserFavorites extends React.Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class UserFavorites extends React.Component {
         this._isMounted = false
         ApiRequest.getProfile("account/" + this.props.apiInfo.params.account_username + "/favorites/", this.props.apiInfo.params.access_token).then((response) => {
             this.setState({
-                favorites: response.data,
+                favorites: response,
                 loading: false
             })
         }, (err) => {
@@ -40,7 +41,7 @@ class UserFavorites extends React.Component {
         var favoritesArray = []
         console.log("Link: " + JSON.stringify(this.state.favorites))
         for (var i in this.state.favorites.data) {
-            favoritesArray.push(<Favorites style={{margin: 20,}} key={i} img_link={this.state.favorites.data[i].link} img_ups={this.state.favorites.data[i].ups} img_downs={this.state.favorites.data[i].downs}/>)
+            favoritesArray.push(<Favorites style={{margin: 20,}} key={i} cover_height={this.state.favorites.data[i].cover_height} cover_width={this.state.favorites.data[i].cover_width} img_title={this.state.favorites.data[i].title} img_link={this.state.favorites.data[i].link} img_ups={this.state.favorites.data[i].ups} img_downs={this.state.favorites.data[i].downs}/>)
         }
         return (favoritesArray)
     }
