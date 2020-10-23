@@ -65,7 +65,7 @@ const SearchBar = StyleSheet.create({
     androidSafeArea: {
         flex: 1,
         paddingTop: Platform.OS === 'android' ? 40 : 0,
-        marginBottom: 10,
+        marginBottom: Platform.OS === 'android' ? 10 : 0,
         backgroundColor: '#2a2a2a',
     },
     scrollView: {

@@ -26,8 +26,6 @@ export default class ImageComponent extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(prevState.favorite)
-        console.log(this.state.favorite)
     }
 
     applyToFavorites() {

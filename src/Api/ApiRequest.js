@@ -18,9 +18,8 @@ module.exports = {
         return fetch(env.issuer + urlTarget, {
             method: 'GET',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type':'application/json',
-                'Authorization': 'Bearer ' + authorization
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + authorization
             }
         }).then((response) => {
             console.log(response)
@@ -34,9 +33,8 @@ module.exports = {
         return fetch(env.issuer + urlTarget, {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type':'application/json',
-                'Authorization': 'Bearer ' + authorization
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + authorization
             }
         }).then((response) => {
             console.log(response)
@@ -44,6 +42,21 @@ module.exports = {
         }).catch((error) => {
             console.log(error)
         })
-    }
+    },
+
+    postImage (targetUrl: string, data, authorization) {
+        return fetch(env.issuer + targetUrl, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                Authorization: 'Bearer ' + authorization,
+            },
+            body: JSON.stringify(data.data)
+        }).then((res) => {
+                return res.json()
+        }).catch((error) => {
+
+        })
+    },
 }
 
