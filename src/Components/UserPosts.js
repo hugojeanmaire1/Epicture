@@ -2,12 +2,13 @@ import * as React from 'react';
 import { View, StyleSheet, Dimensions, Text, SafeAreaView, ScrollView} from 'react-native';
 import { connect } from "react-redux";
 import Favorites from "./Favorites";
+import ParseContent from "../Api/ParseContentImages";
 
 class UserPosts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            posts: [],
+            apiRes: [],
         }
     }
 
@@ -20,19 +21,17 @@ class UserPosts extends React.Component {
             console.log("Text: " + JSON.stringify(response))
             response.json().then((responseJson) => {
                 console.log(responseJson);
-                this.setState({posts: responseJson})
+                this.setState({apiRes: responseJson.data})
             })
         })
     };
 
     createPostsComponents() {
-        if (this.state.posts === undefined)
+        if (this.state.apiRes === undefined)
             return (<Text style={{color: 'white'}}>No Fucking Posts Yet</Text>)
-        var postsArray = []
-        for (var i in this.state.posts.data) {
-            postsArray.push(<Favorites style={{margin: 20,}} key={i} img_title={"sssssssssssssssssssssssssssssssssss"} img_link={this.state.posts.data[i].link} img_ups={this.state.posts.data[i].ups} img_downs={this.state.posts.data[i].downs}/>)
-        }
-        return (postsArray)
+        const access = JSON.parse(JSON.stringify(this.props.apiInfo))
+        console.log(JSON.stringify(access.params))
+        return (<ParseContent apiRes={this.state.apiRes} accessToken={access.params.access_token}/>)
     }
 
     render() {
