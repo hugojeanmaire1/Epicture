@@ -3,6 +3,7 @@ import * as React from 'react';
 import ApiRequest from '../Api/ApiRequest';
 import ParseContent from '../Api/ParseContentImages';
 import {connect} from "react-redux";
+import {Picker} from '@react-native-community/picker'
 
 class MostViral extends React.Component {
 
@@ -57,10 +58,34 @@ class MostViral extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={{ backgroundColor: '#2a2a2a'}}>
                 <SafeAreaView style={{backgroundColor: '#2a2a2a'}}>
                     <View style={styles.picker}>
-
+                        <View style={{ flex: 0.5 }}>
+                            <Picker
+                                selectedValue={this.state.viral}
+                                mode='dropdown'
+                                style={{backgroundColor: '#ed7462'}}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({viral: itemValue})
+                                }>
+                                <Picker.Item label="Hot" value="hot" />
+                                <Picker.Item label="Top" value="top" />
+                            </Picker>
+                        </View>
+                        <View style={{ flex: 0.5 }}>
+                            <Picker
+                                selectedValue={this.state.sort}
+                                mode='dropdown'
+                                style={{backgroundColor: '#ed7462'}}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({sort: itemValue})
+                                }>
+                                <Picker.Item label="Viral" value="viral" />
+                                <Picker.Item label="Top" value="top" />
+                                <Picker.Item label="Time" value="time" />
+                            </Picker>
+                        </View>
                     </View>
                     <ScrollView contentContainerStyle={styles.scrollView} removeClippedSubviews={true}>
                         { this.renderImages() }
@@ -77,35 +102,10 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(MostViral);
 
-/*
-<View style={{ flex: 0.5 }}>
-                        <Picker
-                            selectedValue={this.state.viral}
-                            style={{backgroundColor: '#C4DBF6'}}
-                            onValueChange={(itemValue, itemIndex) =>
-                                this.setState({viral: itemValue})
-                            }>
-                            <Picker.Item label="Hot" value="hot" />
-                            <Picker.Item label="Top" value="top" />
-                        </Picker>
-                    </View>
-                    <View style={{ flex: 0.5 }}>
-                        <Picker
-                            selectedValue={this.state.sort}
-                            style={{backgroundColor: '#C4DBF6'}}
-                            onValueChange={(itemValue, itemIndex) =>
-                                this.setState({sort: itemValue})
-                            }>
-                            <Picker.Item label="Viral" value="viral" />
-                            <Picker.Item label="Top" value="top" />
-                            <Picker.Item label="Time" value="time" />
-                        </Picker>
-                    </View>
- */
-
 const styles = StyleSheet.create({
 
     picker: {
+        height: 50,
         flexDirection: 'row',
         alignItems: 'center',
     },

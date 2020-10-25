@@ -28,6 +28,8 @@ export default class App extends Component {
         this.setState({isConnected: isConnected});
         if (this.state.isConnected === true)
             this.setState({selectedTab: 'Home'});
+        else
+            this.setState({selectedTab: 'Login'});
     }
 
     selectedTab = () => {

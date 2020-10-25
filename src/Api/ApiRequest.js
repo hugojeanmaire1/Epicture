@@ -4,11 +4,9 @@ module.exports = {
 
     get(urlTarget: string) {
         return fetch(env.issuer + urlTarget, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type':'application/json',
-                'Authorization': 'Client-ID' + env.clientId
-            }
+            headers: new Headers({
+                Authorization: `Client-ID ${env.clientId}`,
+            }),
         }).then((response) => {
             return response.json()
         })
@@ -18,7 +16,6 @@ module.exports = {
         return fetch(env.issuer + urlTarget, {
             method: 'GET',
             headers: {
-                Accept: 'application/json',
                 Authorization: 'Bearer ' + authorization
             }
         }).then((response) => {
@@ -44,18 +41,33 @@ module.exports = {
         })
     },
 
-    postImage (targetUrl: string, data, authorization) {
+    postImage(targetUrl: string, authorization: {}, token: string) {
+        console.log("UPLOAD")
+        console.log(authorization)
+        const formData = new FormData();
+        if (authorization.video === undefined) {
+            formData.append('image', authorization.image);
+        } else if (authorization.image === undefined) {
+            formData.append('video', authorization.video);
+        }
+        formData.append('name', authorization.name);
+        formData.append('type', 'base64');
+        formData.append('title', authorization.title);
+        formData.append('description', authorization.description);
+
+
         return fetch(env.issuer + targetUrl, {
             method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                Authorization: 'Bearer ' + authorization,
-            },
-            body: JSON.stringify(data.data)
+            headers: new Headers({
+                Authorization: `Bearer ${token}`,
+            }),
+            body: formData
         }).then((res) => {
-                return res.json()
+            console.log(res)
+            return res.json()
         }).catch((error) => {
-
+            console.log(error)
+            return error
         })
     },
 }

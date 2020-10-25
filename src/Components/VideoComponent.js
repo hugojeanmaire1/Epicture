@@ -25,9 +25,6 @@ export default class ImageComponent extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-    }
-
     applyToFavorites() {
         ApiRequest.favoriteAnImage("image/" + this.props.video.id + "/favorite", this.props.accessToken).then((r) => {
             if (r.success === true) {
@@ -65,6 +62,7 @@ export default class ImageComponent extends React.Component {
     }
 
     shouldVideoPlay() {
+        console.log("PLAY")
         if (this.state.should_play === false) {
             this.setState({
                 should_play: true

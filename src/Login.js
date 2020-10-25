@@ -8,9 +8,6 @@ import * as AuthSession from "expo-auth-session";
 class Login extends Component {
 
     async componentDidMount() {
-/*        await Font.loadAsync({
-            'sansitaSwashed-Medium': require('./assets/fonts/SansitaSwashed-Medium.ttf')
-        });*/
     }
 
     _sendRequestLogin = async () => {
@@ -30,10 +27,6 @@ class Login extends Component {
             this.props.callback(false);
         }
     };
-
-    calc() {
-
-    }
 
     render() {
         return (
@@ -72,7 +65,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
-        //backgroundColor: "#63a7f0"
         backgroundColor: "#2a2a2a",
     },
 
@@ -93,7 +85,7 @@ const styles = StyleSheet.create({
 
     heading: {
         color: '#C4DBF6',
-        //fontFamily: 'sansitaSwashed-Medium',
+        //fontFamily: 'Sansita Swashed',
         fontSize: 40,
     }
 });

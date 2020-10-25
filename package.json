@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/picker": "1.6.6",
     "expo": "~39.0.2",
     "expo-auth-session": "~2.0.0",
     "expo-av": "~8.6.0",

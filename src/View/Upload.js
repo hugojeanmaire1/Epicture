@@ -1,28 +1,36 @@
-import {Button, Text} from 'react-native-paper';
+import {Button, Text, TextInput} from 'react-native-paper';
 import * as React from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import {SafeAreaView, Image, StyleSheet, Platform, View, ScrollView} from "react-native";
+import {SafeAreaView, Image, StyleSheet, Platform, View, Dimensions, ScrollView} from "react-native";
 import * as Permissions from 'expo-permissions';
 import {connect} from "react-redux";
-import {Video} from "expo-av";
-
+import ApiRequest from '../Api/ApiRequest';
 
 class Upload extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            picture: [],
+            picture: undefined,
             permissionCamera: false,
             permissionCameraRoll: false,
+            title: '',
+            name: '',
+            description: '',
         }
+
+        this.windowSize = Dimensions.get('window');
+        this.widthMax = this.windowSize.width - 40;
+        this.heightMax = this.windowSize.height - 40;
+        this.ratio = this.heightMax / this.widthMax
+
     }
 
 
     async componentDidMount() {
         const permission = await Permissions.getAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
         if (permission.permissions.camera.status !== "granted") {
-            const {status, permissions} = await Permissions.askAsync(Permissions.CAMERA)
+            const {status} = await Permissions.askAsync(Permissions.CAMERA)
             if (status === "granted")
                 this.setState({
                     permissionCamera: true,
@@ -34,7 +42,7 @@ class Upload extends React.Component {
         }
 
         if (permission.permissions.cameraRoll.status !== "granted") {
-            const {status, permissions} = await Permissions.askAsync(Permissions.CAMERA)
+            const {status} = await Permissions.askAsync(Permissions.CAMERA)
             if (status === "granted")
                 this.setState({
                     permissionCameraRoll: true,
@@ -51,19 +59,19 @@ class Upload extends React.Component {
             console.log("CANCELLED");
         } else {
             this.setState({
-                picture: [...this.state.picture, pickerResult]
+                picture: pickerResult
             })
         }
     }
 
     async _handleLibrary() {
         if (this.state.permissionCameraRoll === false) {
-            alert("Pas les permissions pour accéder a la caméraRoll")
+            alert("Please check your permission")
             return;
         }
 
         let pickerResult = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             base64: true,
             allowsEditing: true,
             aspect: [16, 9],
@@ -71,16 +79,16 @@ class Upload extends React.Component {
         });
         this.checkResultPicker(pickerResult)
 
-        console.log("PICTURE[] = + { " + JSON.stringify(this.state.picture[0].type) + "}")
+        console.log("PICTURE[] = + { " + JSON.stringify(this.state.picture.uri) + "}")
     }
 
     async _handleCamera() {
         if (this.state.permissionCameraRoll === false) {
-            alert("Pas les permissions pour accéder a la caméra")
+            alert("Please check your CameraRoll Permission")
             return;
         }
         let pickerResult = await ImagePicker.launchCameraAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             base64: true,
             allowsEditing: true,
             aspect: [16, 9],
@@ -89,54 +97,87 @@ class Upload extends React.Component {
             videoQuality: 1
         });
         this.checkResultPicker(pickerResult)
-        console.log("PICTURE[] = + { " + JSON.stringify(this.state.picture[0].type) + "}")
+    }
+
+    _uploadPhotos() {
+        const title = this.state.title
+        const name = this.state.name
+        const desc = this.state.description
+        const access_token = this.props.apiInfo.params.access_token
+        const uri = this.state.picture.base64;
+        if (this.state.picture === undefined || title === '' || name === '' || desc === '') {
+            alert("Please select an image or take one, or fill fields")
+            return;
+        }
+        const auth = {
+            image: uri,
+            type: 'base64',
+            name: name,
+            title: title,
+            description: desc,
+        }
+        ApiRequest.postImage("image.json", auth, access_token).then(r => {
+            if (r.success === "true")
+                alert("Your image or video has been upload")
+            console.log(r)
+        })
     }
 
     render() {
-        let imageUri = this.state.picture[0] ? `data:image/jpg;base64,${this.state.picture[0].base64}` : null;
+        let imageUri = this.state.picture ? `data:image/jpg;base64,${this.state.picture.base64}` : null;
+        let height = this.state.picture ? parseInt(`${this.state.picture.height}`) / this.ratio: null;
+        let width = this.state.picture ? parseInt(`${this.state.picture.width}`) / this.ratio : null;
+        console.log(height)
+        console.log(width)
         return (
             <SafeAreaView style={styles.androidSafeArea}>
                 <View style={{ marginRight: 'auto', marginLeft: 'auto'}}>
                     <View>
-                        <Text style={{ color: 'white', fontSize: 30 }}>Upload photos or videos</Text>
+                        <Button onPress={() => this._handleLibrary()}>
+                            <Text style={{ color: 'white'}}>Open Camera Roll</Text>
+                        </Button>
+                        <Button onPress={() => this._handleCamera()}>
+                            <Text style={{ color: 'white'}}>Open Camera</Text>
+                        </Button>
                     </View>
-                    <Button onPress={() => this._handleLibrary()}>
-                        <Text>OPEN LIBRARY</Text>
-                    </Button>
-                    <Button onPress={() => this._handleCamera()}>
-                        <Text>OPEN CAMERA</Text>
-                    </Button>
-                    <ScrollView contentContainerStyle={styles.scrollView} removeClippedSubviews={true}>
-
-                    </ScrollView>
-                    {this.state.picture[0] && this.state.picture[0].type === "image"
-                        ? <Image
-                            source={{uri: imageUri}}
-                            style={{ width: 200, height: 200 }}
-                        />
-                        : null}
-                    {this.state.picture[0] && this.state.picture[0].type === "video"
-                        ? <Video
-                            ref={(ref) => {
-                                this.player = ref
-                            }}
-                            rate={1.0}
-                            volume={1.0}
-                            isMuted={false}
-                            resizeMode="cover"
-                            shouldPlay={true}
-                            isLooping
-                            style={{ width: 200, height: 200 }}
-                            source={{uri: imageUri}}
-                        />
-                        : null}
-                    {this.state.picture[0]
-                        ? <Text>
-                            Keys on pickerResult:
-                            {' '}
-                            {JSON.stringify(Object.keys(this.state.picture[0]))}
-                        </Text>
-                        : null}
+                    <View>
+                        {this.state.picture
+                            ?
+                            <View>
+                                <View>
+                                    <TextInput
+                                        label='Title of the image'
+                                        value={this.state.title}
+                                        onChangeText={text => this.setState({ title: text})}
+                                    />
+                                </View>
+                                <View>
+                                    <TextInput
+                                        label='Name of the image'
+                                        value={this.state.name}
+                                        onChangeText={text => this.setState({ name: text})}
+                                    />
+                                </View>
+                                <View>
+                                    <TextInput
+                                        label='Description of the image'
+                                        value={this.state.description}
+                                        onChangeText={text => this.setState({ description: text})}
+                                    />
+                                </View>
+                                <View style={{ backgroundColor: '#4b4b4b', borderRadius: 10, marginBottom: 20}}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Image
+                                            source={{ uri: imageUri }}
+                                            style={{ aspectRatio: 1, width: '100%', height: '100%'}}/>
+                                    </View>
+                                    <Button onPress={() => this._uploadPhotos()}>
+                                        <Text>UPLOAD</Text>
+                                    </Button>
+                                </View>
+                            </View>
+                            : null}
+                    </View>
                 </View>
             </SafeAreaView>
         );
@@ -163,4 +204,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(Upload);
-

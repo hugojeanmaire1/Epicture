@@ -1,6 +1,6 @@
 import React from 'react';
-import {Dimensions, View, Image, Text, StyleSheet, TouchableHighlight} from 'react-native';
-import {Avatar, IconButton} from "react-native-paper";
+import {Dimensions, View, Image, Text, TouchableHighlight} from 'react-native';
+import {Avatar} from "react-native-paper";
 import ApiRequest from '../Api/ApiRequest';
 
 export default class ImageComponent extends React.Component {
@@ -110,15 +110,3 @@ export default class ImageComponent extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-
-    button: {
-        borderWidth: 1,
-        borderColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 100,
-        width: 25,
-        height: 25,
-    }
-});
