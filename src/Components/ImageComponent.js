@@ -11,6 +11,10 @@ export default class ImageComponent extends React.Component {
             favorite: false
         }
 
+        if (this.props.favorite === true) {
+            this.state.favorite = true
+        }
+
         this.windowSize = Dimensions.get('window');
         this.widthMax = this.windowSize.width - 40;
 

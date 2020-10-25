@@ -3,6 +3,7 @@ import { View, StyleSheet, Dimensions, Text, SafeAreaView, ScrollView} from 'rea
 import { connect } from "react-redux";
 import Favorites from "./Favorites";
 import ParseContent from "../Api/ParseContentImages";
+import ApiRequest from "../Api/ApiRequest";
 
 class UserPosts extends React.Component {
     constructor(props) {
@@ -10,25 +11,20 @@ class UserPosts extends React.Component {
         this.state = {
             apiRes: [],
         }
-    }
-
-    componentDidMount() {
-        fetch("https://api.imgur.com/3/account/me/images/", {
-            headers: {
-                'Authorization': 'Bearer ' + this.props.apiInfo.params.access_token
-            }
-        }).then((response) => {
-            console.log("Text: " + JSON.stringify(response))
-            response.json().then((responseJson) => {
-                console.log(responseJson);
-                this.setState({apiRes: responseJson.data})
+        this._isMounted = false
+        ApiRequest.getProfile("account/" + this.props.apiInfo.params.account_username + "/images/", this.props.apiInfo.params.access_token).then((response) => {
+            this.setState({
+                apiRes: response.data,
+                loading: false
             })
+        }, (err) => {
+            console.log('error: ', err)
         })
-    };
+    }
 
     createPostsComponents() {
         if (this.state.apiRes === undefined)
-            return (<Text style={{color: 'white'}}>No Fucking Posts Yet</Text>)
+            return (<Text style={{color: 'white'}}>No Fucking Favorites Yet</Text>)
         const access = JSON.parse(JSON.stringify(this.props.apiInfo))
         console.log(JSON.stringify(access.params))
         return (<ParseContent apiRes={this.state.apiRes} accessToken={access.params.access_token}/>)

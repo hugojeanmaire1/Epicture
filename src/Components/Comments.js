@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Image, Text, View, StyleSheet } from 'react-native';
-import { Card, Title, Paragraph } from 'react-native-paper';
+import {Card, Title, Paragraph, Avatar} from 'react-native-paper';
 import { connect } from "react-redux";
 import env from '../../env.json'
 
@@ -25,7 +25,32 @@ class Comments extends React.Component {
 
     render () {
         return (
-            <Card style={{marginVertical: 20}}>
+            <View style={{ flex: 1, backgroundColor: '#4b4b4b', borderRadius: 10, marginBottom: 20}}>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <Image
+                        source={{ uri: this.state.image }}
+                        style={{ width: 400, height: 400, alignSelf: 'stretch'}}/>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <Text
+                        style={{
+                            color: 'white',
+                            paddingVertical: 20,
+                            paddingLeft: 20,
+                            fontSize: 20
+                        }}
+                    >
+                        {this.props.comment}
+                    </Text>
+                </View>
+                <View style={{ flexDirection: 'row', paddingTop: 10, paddingBottom: 10, alignItems: 'center'}}>
+                    <View style={{ paddingRight: 10, flexDirection: 'row', marginLeft: 'auto', marginRight: 'auto'}}>
+                        <Avatar.Icon size={30} color={'white'} icon="arrow-up"/>
+                        <Text style={{ color: 'white', paddingLeft: 5 }}>{this.props.comment_upvotes}</Text>
+                    </View>
+                </View>
+            </View>
+            /*<Card style={{marginVertical: 20}}>
                 <Card.Title/>
                 <Card.Cover source={{uri:this.state.image}} />
                 <Card.Content>
@@ -34,7 +59,7 @@ class Comments extends React.Component {
                 <Card.Actions style={{marginTop: 30}}>
                     <Text>{this.props.comment_upvotes} UpVotes</Text>
                 </Card.Actions>
-            </Card>
+            </Card>*/
             /*<View style={{flexDirection: 'row', margin: 20 , flexWrap: 'wrap', backgroundColor: '#313631', borderRadius: 10}}>
                 <Image
                     source={{uri:this.state.image}}

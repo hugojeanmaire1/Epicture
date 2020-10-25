@@ -40,7 +40,7 @@ class UserFavorites extends React.Component {
             return (<Text style={{color: 'white'}}>No Fucking Favorites Yet</Text>)
         const access = JSON.parse(JSON.stringify(this.props.apiInfo))
         console.log(JSON.stringify(access.params))
-        return (<ParseContent apiRes={this.state.apiRes} accessToken={access.params.access_token}/>)
+        return (<ParseContent apiRes={this.state.apiRes} accessToken={access.params.access_token} favorite={true}/>)
     }
 
     render() {
